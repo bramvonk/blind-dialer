@@ -98,6 +98,7 @@ def play_and_wait_for_button_press(sound_filename, timeout_seconds):
     return joy.wait_for_button_press(timeout_seconds)
 
 
+print "Program started. Waiting for button presses on your game controller."
 while True:
     # wait for granny to press a button
     joy.wait_for_button_press()
