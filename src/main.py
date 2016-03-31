@@ -8,6 +8,28 @@ import contacts
 import pygame
 import time
 import sys
+import argparse
+
+
+parser = argparse.ArgumentParser(description="Land line dialer with user input from single button presses on a " +
+                                             "game controller, and user feedback with audio.")
+parser.add_argument("modem_port",
+                    help="The name of the serial port to use for the modem, " +
+                         "e.g. COM1: for Windows, or /dev/ttyS0 in Linux.")
+parser.add_argument("contacts_directory",
+                    help="The directory that contains the contacts in .wav format, " +
+                         "each file having a file name ordernumber_name_phonenumber.wav, " +
+                         "for example 1_bill_55523423.wav .")
+parser.add_argument("-l", "--locale",
+                    help="Indicates the directory in ./sounds to use for the program's audio feedback. " +
+                         "Defaults to 'en'.",
+                    default="en")
+args = parser.parse_args()
+modem_port = args.modem_port
+contacts_directory = args.contacts_directory
+locale = args.locale
+
+
 
 if sys.platform == "win32":
     # workaround in windows: windows won't play sounds if pygame.init() has been called (which we need for joystick to
@@ -18,9 +40,9 @@ if sys.platform == "win32":
 
 joy = joystick.Joystick()
 sound_player = sound.SoundPlayer()
-contacts = contacts.load_contacts("contacts")
+contacts = contacts.load_contacts(contacts_directory)
 
-SOUND_DIRECTORY = "sounds/en/"
+SOUND_DIRECTORY = "sounds/" + locale + "/"
 SOUND_PICK_UP_THE_HANDSET = SOUND_DIRECTORY + "pick_up_the_handset.wav"
 SOUND_DIALING_FAILED = SOUND_DIRECTORY + "dialing_failed.wav"
 SOUND_PRESS_WHEN_YOU_HEAR_THE_RIGHT_PERSON = SOUND_DIRECTORY + "press_when_you_hear_the_right_person.wav"
@@ -34,7 +56,7 @@ def dial(phone_number):
     try:
         # using "with" automatically cleans up modem,
         # see http://stackoverflow.com/questions/865115/how-do-i-correctly-clean-up-a-python-object
-        with modem.modem("COM2:") as mod:
+        with modem.modem(modem_port) as mod:
             # modem ok?
             mod.send_command_and_expect_ok("AT")
 
