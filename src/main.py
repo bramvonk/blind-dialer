@@ -26,10 +26,18 @@ parser.add_argument("-l", "--locale",
                     help="Indicates the directory in ./sounds to use for the program's audio feedback. " +
                          "Defaults to 'en'.",
                     default="en")
+parser.add_argument("-t", "--reaction-time",
+                    metavar="REACTION-TIME",
+                    dest="reaction_time",
+                    help="Number of seconds to wait for button presses after e.g. a contact's name has sounded. " +
+                         "Defaults to 3.",
+                    type=float,
+                    default=3.0)
 args = parser.parse_args()
 modem_port = args.modem_port
 contacts_directory = args.contacts_directory
 locale = args.locale
+reaction_time = args.reaction_time
 
 
 joy = joystick.Joystick()
@@ -67,7 +75,7 @@ def dial(phone_number):
             sound_player.play_sound_blocking(SOUND_PICK_UP_THE_HANDSET)
 
             # wait a while
-            time.sleep(2)
+            time.sleep(reaction_time)
 
             # let the modem hang up. Granny should have the handset now, which will keep the connection open.
             mod.send_command_and_expect_ok("ATH")
@@ -95,15 +103,15 @@ while True:
 
     # let granny know what to do
     sound_player.play_sound_blocking(SOUND_PRESS_WHEN_YOU_HEAR_THE_RIGHT_PERSON)
-    time.sleep(2)
+    time.sleep(reaction_time)
 
     # loop through all contacts, play their sounds, and wait for joystick press
     for contact in contacts:
-        if play_and_wait_for_button_press(contact.sound_filename, 3):
+        if play_and_wait_for_button_press(contact.sound_filename, reaction_time):
             # ask for confirumation
             if play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1, 0) or \
                     play_and_wait_for_button_press(contact.sound_filename, 0) or \
-                    play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2, 3):
+                    play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2, reaction_time):
                 dial(contact.phone_number)
             else:
                 sound_player.play_sound_blocking(SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM)
