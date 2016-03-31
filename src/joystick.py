@@ -33,4 +33,3 @@ class Joystick:
             if self.joystick.get_button(i) != 0:
                 return True
         return False
-
