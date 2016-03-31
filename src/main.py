@@ -13,13 +13,16 @@ import argparse
 parser = argparse.ArgumentParser(description="Land line dialer with user input from single button presses on a " +
                                              "game controller, and user feedback with audio.")
 parser.add_argument("modem_port",
+                    metavar="modem-port",
                     help="The name of the serial port to use for the modem, " +
                          "e.g. COM1: for Windows, or /dev/ttyS0 in Linux.")
 parser.add_argument("contacts_directory",
+                    metavar="contacts-directory",
                     help="The directory that contains the contacts in .wav format, " +
                          "each file having a file name ordernumber_name_phonenumber.wav, " +
                          "for example 1_bill_55523423.wav .")
 parser.add_argument("-l", "--locale",
+                    dest="locale",
                     help="Indicates the directory in ./sounds to use for the program's audio feedback. " +
                          "Defaults to 'en'.",
                     default="en")
