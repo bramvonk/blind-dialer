@@ -64,12 +64,12 @@ def play_and_wait_for_button_press(sound_filename, timeout_seconds):
     # wait for joystick presses while the sound plays (we don't want to use a blocking sound player, because
     # I'm too lazy to do joystick presses in a thread or something)
     while not sound_player.is_sound_done_playing():
-        if joy.is_button_pressed(0.1):
+        if joy.wait_for_button_press(0.1):
             sound_player.stop_playing()
             return True
 
     # wait for timeout_seoncs seconds before giving up. Return if a joystick button was pressed
-    return joy.is_button_pressed(timeout_seconds)
+    return joy.wait_for_button_press(timeout_seconds)
 
 
 while True:
