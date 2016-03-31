@@ -20,13 +20,14 @@ joy = joystick.Joystick()
 sound_player = sound.SoundPlayer()
 contacts = contacts.load_contacts("contacts")
 
-SOUND_PICK_UP_THE_HANDSET = "pick_up_the_handset.wav"
-SOUND_SORRY_DIALING_FAILED = "sorry_calling_failed.wav"
-SOUND_PRESS_WHEN_YOU_HEAR_THE_RIGHT_PERSON = "press_when_you_hear_the_right_person.wav"
-SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1 = "are_you_sure_you_want_to_call_part_1.wav"
-SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2 = "are_you_sure_you_want_to_call_part_2.wav"
-SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM = "did_not_dial_because_you_did_not_confirm.wav"
-SOUND_NO_CONTACT_SELECTED = "no_contact_selected_press_again_to_try_again.wav"
+SOUND_DIRECTORY = "sounds/en/"
+SOUND_PICK_UP_THE_HANDSET = SOUND_DIRECTORY + "pick_up_the_handset.wav"
+SOUND_DIALING_FAILED = SOUND_DIRECTORY + "dialing_failed.wav"
+SOUND_PRESS_WHEN_YOU_HEAR_THE_RIGHT_PERSON = SOUND_DIRECTORY + "press_when_you_hear_the_right_person.wav"
+SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1 = SOUND_DIRECTORY + "are_you_sure_you_want_to_call_part_1.wav"
+SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2 = SOUND_DIRECTORY + "are_you_sure_you_want_to_call_part_2.wav"
+SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM = SOUND_DIRECTORY + "did_not_dial_because_you_did_not_confirm.wav"
+SOUND_NO_CONTACT_SELECTED = SOUND_DIRECTORY + "no_contact_selected_press_again_to_try_again.wav"
 
 
 def dial(phone_number):
@@ -55,7 +56,7 @@ def dial(phone_number):
             # let the modem hang up. Granny should have the handset now, which will keep the connection open.
             mod.send_command_and_expect_ok("ATH")
     except: # I know this is too broad, but I don't want any error while dialing to stop this program.
-        sound_player.play_sound_blocking(SOUND_SORRY_DIALING_FAILED)
+        sound_player.play_sound_blocking(SOUND_DIALING_FAILED)
 
 
 def play_and_wait_for_button_press(sound_filename, timeout_seconds):
