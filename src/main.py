@@ -52,6 +52,7 @@ SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1 = SOUND_DIRECTORY + "are_you_sure_you
 SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2 = SOUND_DIRECTORY + "are_you_sure_you_want_to_call_part_2.wav"
 SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM = SOUND_DIRECTORY + "did_not_dial_because_you_did_not_confirm.wav"
 SOUND_NO_CONTACT_SELECTED = SOUND_DIRECTORY + "no_contact_selected_press_again_to_try_again.wav"
+SOUND_NUMBER_IS_BEING_DIALED = SOUND_DIRECTORY + "number_is_being_dialed.wav"
 
 
 def dial(phone_number):
@@ -116,6 +117,7 @@ while True:
             if play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1, 0) or \
                     play_and_wait_for_button_press(contact.sound_filename, 0) or \
                     play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_2, reaction_time):
+                sound_player.play_sound_blocking(SOUND_NUMBER_IS_BEING_DIALED)
                 dial(contact.phone_number)
             else:
                 sound_player.play_sound_blocking(SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM)
