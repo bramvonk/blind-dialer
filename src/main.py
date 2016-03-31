@@ -6,9 +6,7 @@ import sound
 import contacts
 
 # other imports
-import pygame
 import time
-import sys
 import argparse
 
 
@@ -30,14 +28,6 @@ modem_port = args.modem_port
 contacts_directory = args.contacts_directory
 locale = args.locale
 
-
-
-if sys.platform == "win32":
-    # workaround in windows: windows won't play sounds if pygame.init() has been called (which we need for joystick to
-    # work), but you can work around this bug by opening a window...
-    # see http://stackoverflow.com/questions/2936914/pygame-sounds-dont-play
-    pygame.init()
-    screen = pygame.display.set_mode((40, 40), 0, 32)
 
 joy = joystick.Joystick()
 sound_player = sound.SoundPlayer()

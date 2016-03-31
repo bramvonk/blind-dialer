@@ -1,6 +1,14 @@
+import sys
 import pygame.mixer
 from pygame.mixer import Sound
 
+
+if sys.platform == "win32":
+    # workaround in windows: windows won't play sounds if pygame.init() has been called (which we need for joystick to
+    # work), but you can work around this bug by opening a window...
+    # see http://stackoverflow.com/questions/2936914/pygame-sounds-dont-play
+    pygame.init()
+    screen = pygame.display.set_mode((40, 40), 0, 32)
 
 class SoundPlayer:
     def __init__(self):
