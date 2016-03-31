@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # my source files
 import modem
 import joystick
