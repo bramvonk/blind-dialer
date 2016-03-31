@@ -107,8 +107,10 @@ while True:
     time.sleep(reaction_time)
 
     # loop through all contacts, play their sounds, and wait for joystick press
+    selected_a_contact = False
     for contact in contacts:
         if play_and_wait_for_button_press(contact.sound_filename, reaction_time):
+            selected_a_contact = True
             # ask for confirumation
             if play_and_wait_for_button_press(SOUND_ARE_YOU_SURE_YOU_WANT_TO_CALL_PART_1, 0) or \
                     play_and_wait_for_button_press(contact.sound_filename, 0) or \
@@ -118,4 +120,5 @@ while True:
                 sound_player.play_sound_blocking(SOUND_DID_NOT_DIAL_BECAUSE_YOU_DID_NOT_CONFIRM)
             break
 
+    if not selected_a_contact:
         sound_player.play_sound_blocking(SOUND_NO_CONTACT_SELECTED)
