@@ -4,6 +4,10 @@ import re
 import operator
 
 
+"""
+Returns a list of Contact instances from a list of files in the given directory.
+See README.md for how these files should be named.
+"""
 def load_contacts(directory):
     contacts = []
 
@@ -14,11 +18,11 @@ def load_contacts(directory):
         m = p.match(possible_contact_file)
         if m:
             sound_filename = join(directory, possible_contact_file)
-            sequence_number = int(m.group(1)) #parsing to int makes "10_foo_123.wav" sort after "2_bar_234.wav"
+            sequence_number = int(m.group(1)) # parsing to int makes "10_foo_123.wav" sort after "2_bar_234.wav"
             phone_number = m.group(2)
             contacts.extend([Contact(sound_filename, phone_number, sequence_number)])
 
-    #sort by its sequence number
+    # sort by its sequence number
     contacts.sort(key=operator.attrgetter('sequence_number'))
 
     return contacts

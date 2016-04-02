@@ -80,7 +80,9 @@ def dial(phone_number):
 
             # let the modem hang up. Granny should have the handset now, which will keep the connection open.
             mod.send_command_and_expect_ok("ATH")
-    except Exception as exception: # I know this is too broad, but I don't want any error while dialing to stop this program.
+
+    # I know this is too broad, but I don't want any error while dialing to stop this program.
+    except Exception as exception:
         print type(exception).__name__ + ", " + str(exception)
         sound_player.play_sound_blocking(SOUND_DIALING_FAILED)
 
